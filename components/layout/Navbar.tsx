@@ -3,6 +3,7 @@
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { useEffect, useState } from "react";
 
 const navLinks = [
   { label: "About", href: "#about" },
@@ -15,6 +16,11 @@ const navLinks = [
 
 export function Navbar() {
   const { resolvedTheme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
 
   return (
     <header className="sticky top-0 z-50 w-full border-b border-border/50 bg-background/80 backdrop-blur-sm">
@@ -45,7 +51,7 @@ export function Navbar() {
           onClick={() => setTheme(resolvedTheme === "dark" ? "light" : "dark")}
           aria-label="Toggle theme"
         >
-          {resolvedTheme === "dark" ? (
+          {mounted && resolvedTheme === "dark" ? (
             <Sun className="size-4" />
           ) : (
             <Moon className="size-4" />
